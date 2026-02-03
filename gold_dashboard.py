@@ -5,13 +5,14 @@ import plotly.graph_objects as go
 from datetime import datetime, timedelta
 import time
 
-# Import API key from config file
-try:
-    from config import GOLD_API_KEY
-    API_KEY_FROM_CONFIG = GOLD_API_KEY
-except ImportError:
-    API_KEY_FROM_CONFIG = None
-    st.warning("config.py not found. Please create it with your API key or enter manually.")
+# Fetch API key from Streamlit secrets
+api_key = st.secrets.get("GOLD_API_KEY", None)
+
+if api_key:
+    st.sidebar.success("API Key loaded from Streamlit Secrets")
+else:
+    api_key = st.sidebar.text_input("Enter Your Gold API Key", type="password", value="")
+
 
 # Page configuration
 st.set_page_config(page_title="Gold Jewelry Price Dashboard", layout="wide")
