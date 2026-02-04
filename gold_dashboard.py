@@ -105,7 +105,7 @@ def fetch_gold_price(api_key):
             data = response.json()
             price_per_gram_usd = data['price'] / 31.1035
             price_per_oz = data['price']
-            timestamp = datetime.now()
+            timestamp = datetime.now(timezone.utc)
             return price_per_gram_usd, price_per_oz, timestamp, data
         else:
             st.error(f"API Error: {response.status_code} - {response.text}")
@@ -117,7 +117,7 @@ def fetch_gold_price(api_key):
 # Function to generate EXTENSIVE price data with deep historical coverage
 def generate_price_data(api_key, timeframe, current_price):
     """Generate extensive price data with deep historical coverage for smooth panning"""
-    now = datetime.now()
+   now = datetime.now(timezone.utc)
     
     # Define timeframe parameters - total data vs visible window
     timeframe_config = {
