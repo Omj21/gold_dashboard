@@ -46,12 +46,15 @@ st.markdown('<p class="main-header">Live Gold Jewelry Price Dashboard</p>', unsa
 # Sidebar for API configuration
 st.sidebar.header("Configuration")
 
-# Use API key from config or allow manual entry
-if API_KEY_FROM_CONFIG:
-    api_key = API_KEY_FROM_CONFIG
-    st.sidebar.success("API Key loaded from config.py")
-else:
+# Try to get API key from Streamlit secrets
+try:
+    api_key = st.secrets["GOLD_API_KEY"]
+    st.sidebar.success("API Key loaded from Streamlit Secrets")
+except KeyError:
+    # Fallback to manual entry if not in secrets
     api_key = st.sidebar.text_input("Enter Your Gold API Key", type="password", value="")
+    if not api_key:
+        st.warning("Please enter your Gold API key to continue.")
 
 # Jewelry type configurations with US market standards
 JEWELRY_TYPES = {
