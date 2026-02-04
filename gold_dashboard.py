@@ -4,6 +4,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime, timedelta, timezone
 import time
+import pytz
 
 # Fetch API key from Streamlit secrets
 api_key = st.secrets.get("GOLD_API_KEY", None)
@@ -105,7 +106,8 @@ def fetch_gold_price(api_key):
             data = response.json()
             price_per_gram_usd = data['price'] / 31.1035
             price_per_oz = data['price']
-            timestamp = datetime.now(timezone.utc)
+            us_eastern = pytz.timezone('US/Eastern')
+            timestamp = datetime.now(us_eastern)
             return price_per_gram_usd, price_per_oz, timestamp, data
         else:
             st.error(f"API Error: {response.status_code} - {response.text}")
@@ -117,8 +119,9 @@ def fetch_gold_price(api_key):
 # Function to generate EXTENSIVE price data with deep historical coverage
 def generate_price_data(api_key, timeframe, current_price):
     """Generate extensive price data with deep historical coverage for smooth panning"""
-    now = datetime.now(timezone.utc)
-    
+    us_eastern = pytz.timezone('US/Eastern')
+    now = datetime.now(us_eastern)
+
     # Define timeframe parameters - total data vs visible window
     timeframe_config = {
         "1 Minute": {
