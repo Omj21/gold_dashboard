@@ -117,7 +117,7 @@ def fetch_gold_price(api_key):
 # Function to generate EXTENSIVE price data with deep historical coverage
 def generate_price_data(api_key, timeframe, current_price):
     """Generate extensive price data with deep historical coverage for smooth panning"""
-   now = datetime.now(timezone.utc)
+    now = datetime.now(timezone.utc)
     
     # Define timeframe parameters - total data vs visible window
     timeframe_config = {
