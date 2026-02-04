@@ -52,7 +52,12 @@ try:
     st.sidebar.success("API Key loaded from Streamlit Secrets")
 except KeyError:
     # Fallback to manual entry if not in secrets
-    api_key = st.sidebar.text_input("Enter Your Gold API Key", type="password", value="")
+    api_key = st.sidebar.text_input(
+        "Enter Your Gold API Key", 
+        type="password", 
+        value="",
+        key="manual_api_key_input"  # <-- unique key prevents duplicate ID error
+    )
     if not api_key:
         st.warning("Please enter your Gold API key to continue.")
 
